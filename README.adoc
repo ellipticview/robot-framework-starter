@@ -1,0 +1,6 @@
+This repository is a tutorial for Robot Framework for two specific examples:
+
+- testing an API with RESTinstance
+- testing a UI with Playwright
+
+The guide itself is published on github pages.
