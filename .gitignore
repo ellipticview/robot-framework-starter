@@ -1,0 +1,4 @@
+.idea
+
+# Robot Framework test results
+acmeTests/results

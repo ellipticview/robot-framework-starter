@@ -1,11 +1,124 @@
 = Robot Framework Starter Guide
-Author Name
 :doctype: article
 :encoding: utf-8
 :lang: en
 :toc: left
 :numbered:
 
-
 == Introduction
+The objective of this tutorial is to demonstrate how to setup Robot Framework for testing an API and a screen, specifically using:
+
+- RESTinstance
+- Playwright
+
+It is not a tutorial for Robot Framework or for these libraries, there are already many such tutorials available. Instead this tutorial ams to get you a running test from which you can experiment and expand your knowledge.
+
+== Installation
+
+We'll use the *venv* tool to create a Python Virtual Environment on Windows.
+That will isolate this project from other Python projects you may have, that require different (versions of) packages.
+Note that we will not use the https://anaconda.org/[Anaconda] Python distribution, as it is missing several libraries.
+
+=== Install Python
+Head over to https://www.python.org/[python.org]:
+
+. Click on Downloads > Windows.
+. Choose the latest Python 3 release.
+. Choose the Windows Installer (64-bit).
+. Run the downloaded installer
+. Select option "Add Python to Path"
+. Click on Install Now
+. If your Windows installation is limited to 260 characters in the path, you'll see an option to "Disable path length limit". Choose this option.
+. To verify the installation, open a command window and run:
++
+----
+python --version
+----
+
+=== Virtual Environment
+
+A virtual environment is stored in a directory, with the name of the virtual environment.
+We'll use `c:\Users\USERNAME\python_venv` to store the environments. Our environment for Robot is named `robot_env`.
+
+----
+C:\> cd Users\USERNAME
+
+C:\Users\USERNAME> md python_venv
+
+C:\Users\USERNAME> cd python_venv
+
+C:\Users\USERNAME\python_venv> python -m venv robot_env
+----
+
+You will now have directory named `robot_env`.
+
+=== Activate Environment
+You will need to activate the environment each time you start work. A batch file is recommended for this. We'll get to this later. For now:
+
+----
+C:\Users\USERNAME\python_venv> robot_env\Scripts\activate
+----
+
+Once the environment is activated, the command prompt will show as:
+
+----
+(robot_env) C:\Users\USERNAME\python_venv>
+----
+
+=== Install Robot Framework
+At a command prompt as above, run:
+
+----
+pip install robotframework
+----
+
+To check that the installation was succesful, run
+
+----
+robot --version
+----
+
+Now we'll also install the libraries required for our tutorial:
+
+----
+pip install restinstance
+----
+
+== Create folder structure
+
+Create a project folder, let's call it `acmeTests`. Within this folder, create the following 3 folders:
+
+----
+resources
+results
+tests
+----
+
+In the project folder, create a script (remember to replace USERNAME with your user name):
+
+.activate.cmd
+----
+@echo off
+C:\%HOMEPATH%\python_venv\robot_env\Scripts\activate
+----
+
+== API Testing using RESTinstance
+
+You will find many references for API testing that use the `requests` library. A more modern approach is however to use https://pypi.org/project/RESTinstance/[RestInstance]. This page also has a great tutorial to follow.
+
+We'll be using https://jsonplaceholder.typicode.com/ as the site against we will run our tests.
+
+Copy the test script from https://pypi.org/project/RESTinstance/ into `tests/api-test.robot`.
+
+.acmeTests/tests/api-test.robot
+[source]
+----
+include::../../acmeTests/tests/api-test.robot[]
+----
+
+Run on the command line:
+----
+robot --outputdir results tests/
+----
+
 
