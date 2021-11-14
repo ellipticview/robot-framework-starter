@@ -5,7 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.16">
-<meta name="author" content="Author Name">
 <title>Robot Framework Starter Guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -441,13 +440,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>Robot Framework Starter Guide</h1>
-<div class="details">
-<span id="author" class="author">Author Name</span><br>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_introduction">1. Introduction</a></li>
+<li><a href="#_installation">2. Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_install_python">2.1. Install Python</a></li>
+<li><a href="#_virtual_environment">2.2. Virtual Environment</a></li>
+<li><a href="#_activate_environment">2.3. Activate Environment</a></li>
+<li><a href="#_install_robot_framework">2.4. Install Robot Framework</a></li>
+</ul>
+</li>
+<li><a href="#_create_folder_structure">3. Create folder structure</a></li>
+<li><a href="#_api_testing_using_restinstance">4. API Testing using RESTinstance</a></li>
 </ul>
 </div>
 </div>
@@ -455,13 +461,263 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The objective of this tutorial is to demonstrate how to setup Robot Framework for testing an API and a screen, specifically using:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RESTinstance</p>
+</li>
+<li>
+<p>Playwright</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It is not a tutorial for Robot Framework or for these libraries, there are already many such tutorials available. Instead this tutorial ams to get you a running test from which you can experiment and expand your knowledge.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">2. Installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We&#8217;ll use the <strong>venv</strong> tool to create a Python Virtual Environment on Windows.
+That will isolate this project from other Python projects you may have, that require different (versions of) packages.
+Note that we will not use the <a href="https://anaconda.org/">Anaconda</a> Python distribution, as it is missing several libraries.</p>
+</div>
+<div class="sect2">
+<h3 id="_install_python">2.1. Install Python</h3>
+<div class="paragraph">
+<p>Head over to <a href="https://www.python.org/">python.org</a>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click on Downloads &gt; Windows.</p>
+</li>
+<li>
+<p>Choose the latest Python 3 release.</p>
+</li>
+<li>
+<p>Choose the Windows Installer (64-bit).</p>
+</li>
+<li>
+<p>Run the downloaded installer</p>
+</li>
+<li>
+<p>Select option "Add Python to Path"</p>
+</li>
+<li>
+<p>Click on Install Now</p>
+</li>
+<li>
+<p>If your Windows installation is limited to 260 characters in the path, you&#8217;ll see an option to "Disable path length limit". Choose this option.</p>
+</li>
+<li>
+<p>To verify the installation, open a command window and run:</p>
+<div class="listingblock">
+<div class="content">
+<pre>python --version</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_virtual_environment">2.2. Virtual Environment</h3>
+<div class="paragraph">
+<p>A virtual environment is stored in a directory, with the name of the virtual environment.
+We&#8217;ll use <code>c:\Users\USERNAME\python_venv</code> to store the environments. Our environment for Robot is named <code>robot_env</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>C:\&gt; cd Users\USERNAME
 
+C:\Users\USERNAME&gt; md python_venv
+
+C:\Users\USERNAME&gt; cd python_venv
+
+C:\Users\USERNAME\python_venv&gt; python -m venv robot_env</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will now have directory named <code>robot_env</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_activate_environment">2.3. Activate Environment</h3>
+<div class="paragraph">
+<p>You will need to activate the environment each time you start work. A batch file is recommended for this. We&#8217;ll get to this later. For now:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>C:\Users\USERNAME\python_venv&gt; robot_env\Scripts\activate</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the environment is activated, the command prompt will show as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>(robot_env) C:\Users\USERNAME\python_venv&gt;</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_robot_framework">2.4. Install Robot Framework</h3>
+<div class="paragraph">
+<p>At a command prompt as above, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pip install robotframework</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To check that the installation was succesful, run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>robot --version</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we&#8217;ll also install the libraries required for our tutorial:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pip install restinstance</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_folder_structure">3. Create folder structure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create a project folder, let&#8217;s call it <code>acmeTests</code>. Within this folder, create the following 3 folders:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>resources
+results
+tests</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the project folder, create a script (remember to replace USERNAME with your user name):</p>
+</div>
+<div class="listingblock">
+<div class="title">activate.cmd</div>
+<div class="content">
+<pre>@echo off
+C:\%HOMEPATH%\python_venv\robot_env\Scripts\activate</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_api_testing_using_restinstance">4. API Testing using RESTinstance</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You will find many references for API testing that use the <code>requests</code> library. A more modern approach is however to use <a href="https://pypi.org/project/RESTinstance/">RestInstance</a>. This page also has a great tutorial to follow.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll be using <a href="https://jsonplaceholder.typicode.com/" class="bare">https://jsonplaceholder.typicode.com/</a> as the site against we will run our tests.</p>
+</div>
+<div class="paragraph">
+<p>Copy the test script from <a href="https://pypi.org/project/RESTinstance/" class="bare">https://pypi.org/project/RESTinstance/</a> into <code>tests/api-test.robot</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">acmeTests/tests/api-test.robot</div>
+<div class="content">
+<pre class="highlight"><code>*** Settings ***
+Library         REST    https://jsonplaceholder.typicode.com
+Documentation   Test data can be read from variables and files.
+...             Both JSON and Python type systems are supported for inputs.
+...             Every request creates a so-called instance. Can be `Output`.
+...             Most keywords are effective only for the last instance.
+...             Initial schemas are autogenerated for request and response.
+...             You can make them more detailed by using assertion keywords.
+...             The assertion keywords correspond to the JSON types.
+...             They take in either path to the property or a JSONPath query.
+...             Using (enum) values in tests optional. Only type is required.
+...             All the JSON Schema validation keywords are also supported.
+...             Thus, there is no need to write any own validation logic.
+...             Not a long path from schemas to full Swagger/OpenAPI specs.
+...             The persistence of the created instances is the test suite.
+...             Use keyword `Rest instances` to output the created instances.
+
+
+*** Variables ***
+${json}         { "id": 11, "name": "Gil Alexander" }
+&amp;{dict}         name=Julie Langford
+
+
+*** Test Cases ***
+GET an existing user, notice how the schema gets more accurate
+    GET         /users/1                  # this creates a new instance
+    Output schema   response body
+    Object      response body             # values are fully optional
+    Integer     response body id          1
+    String      response body name        Leanne Graham
+    [Teardown]  Output schema             # note the updated response schema
+
+GET existing users, use JSONPath for very short but powerful queries
+    GET         /users?_limit=5           # further assertions are to this
+    Array       response body
+    Integer     $[0].id                   1           # first id is 1
+    String      $[0]..lat                 -37.3159    # any matching child
+    Integer     $..id                     maximum=5   # multiple matches
+    [Teardown]  Output  $[*].email        # outputs all emails as an array
+
+POST with valid params to create a new user, can be output to a file
+    POST        /users                    ${json}
+    Integer     response status           201
+    [Teardown]  Output  response body     ${OUTPUTDIR}/new_user.demo.json
+
+PUT with valid params to update the existing user, values matter here
+    PUT         /users/2                  { "isCoding": true }
+    Boolean     response body isCoding    true
+    PUT         /users/2                  { "sleep": null }
+    Null        response body sleep
+    PUT         /users/2                  { "pockets": "", "money": 0.02 }
+    String      response body pockets     ${EMPTY}
+    Number      response body money       0.02
+    Missing     response body moving      # fails if property moving exists
+
+PATCH with valid params, reusing response properties as a new payload
+    &amp;{res}=     GET   /users/3
+    String      $.name                    Clementine Bauch
+    PATCH       /users/4                  { "name": "${res.body['name']}" }
+    String      $.name                    Clementine Bauch
+    PATCH       /users/5                  ${dict}
+    String      $.name                    ${dict.name}
+
+DELETE the existing successfully, save the history of all requests
+    DELETE      /users/6                  # status can be any of the below
+    Integer     response status           200    202     204
+    Rest instances  ${OUTPUTDIR}/all.demo.json  # all the instances so far</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run on the command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>robot --outputdir results tests/</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-11-14 07:04:51 UTC
+Last updated 2021-11-14 07:34:52 UTC
 </div>
 </div>
 </body>
