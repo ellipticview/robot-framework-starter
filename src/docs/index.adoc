@@ -11,19 +11,34 @@ The objective of this tutorial is to demonstrate how to setup Robot Framework fo
 - RESTinstance
 - Playwright
 
-It is not a tutorial for Robot Framework or for these libraries, there are already many such tutorials available. Instead this tutorial ams to get you a running test from which you can experiment and expand your knowledge.
+It is not a tutorial for Robot Framework or for these libraries, there are already many such tutorials available. Instead this tutorial aims to get you a running test from which you can experiment and expand your knowledge.
 
 == Installation
+=== Install Node.js
+Node.js is required to run Playwright.
+Install Node.js from https://nodejs.org/en/download/
+
+
+
+=== Install Python
 
 We'll use the *venv* tool to create a Python Virtual Environment on Windows.
 That will isolate this project from other Python projects you may have, that require different (versions of) packages.
 Note that we will not use the https://anaconda.org/[Anaconda] Python distribution, as it is missing several libraries.
 
-=== Install Python
+==== Which Python version?
+
+The https://github.com/robotframework/RIDE/[RIDE editor] recommends a particular version of Python.
+At the time of writing (2021-11-14) this is version 3.8.
+
+We'll be wanting to install a binary of library wxPython as a dependency of the RIDE integrated development editor. Check the latest version available on https://pypi.org/project/wxPython/#files. that matches the version for RIDE. E.g. Python version cp38 means Python 3.8.
+
+==== Download and install
+
 Head over to https://www.python.org/[python.org]:
 
 . Click on Downloads > Windows.
-. Choose the latest Python 3 release.
+. Choose the Python 3 release as chosen above.
 . Choose the Windows Installer (64-bit).
 . Run the downloaded installer
 . Select option "Add Python to Path"
@@ -65,6 +80,12 @@ Once the environment is activated, the command prompt will show as:
 (robot_env) C:\Users\USERNAME\python_venv>
 ----
 
+Some of the subsequent libraries install more easily with wheel, so enter this command:
+
+----
+pip install wheel
+----
+
 === Install Robot Framework
 At a command prompt as above, run:
 
@@ -72,7 +93,7 @@ At a command prompt as above, run:
 pip install robotframework
 ----
 
-To check that the installation was succesful, run
+To check that the installation was successful, run
 
 ----
 robot --version
@@ -82,6 +103,30 @@ Now we'll also install the libraries required for our tutorial:
 
 ----
 pip install restinstance
+pip install robotframework-browser
+----
+
+To install the node dependencies, run:
+
+----
+rfbrowser init
+----
+
+=== Install RIDE
+https://github.com/robotframework/RIDE/[RIDE] is the IDE for Robot Framework.
+At the time of writing, we are using Python 3.8 and will be installing the 2.x pre-release.
+
+We're still at a command prompt looking like this:
+
+----
+(robot_env) C:\Users\USERNAME\python_venv>
+----
+
+Run these commands:
+----
+pip install wxPython
+pip install psutil
+pip install --pre robotframework-ride
 ----
 
 == Create folder structure
@@ -94,7 +139,7 @@ results
 tests
 ----
 
-In the project folder, create a script (remember to replace USERNAME with your user name):
+In the project folder, create a script:
 
 .activate.cmd
 ----
@@ -104,7 +149,7 @@ C:\%HOMEPATH%\python_venv\robot_env\Scripts\activate
 
 == API Testing using RESTinstance
 
-You will find many references for API testing that use the `requests` library. A more modern approach is however to use https://pypi.org/project/RESTinstance/[RestInstance]. This page also has a great tutorial to follow.
+You will find many references on the web for API testing that use the `requests` library. A more modern approach is however to use https://pypi.org/project/RESTinstance/[RestInstance]. This page also has a great tutorial to follow.
 
 We'll be using https://jsonplaceholder.typicode.com/ as the site against we will run our tests.
 
@@ -118,7 +163,37 @@ include::../../acmeTests/tests/api-test.robot[]
 
 Run on the command line:
 ----
-robot --outputdir results tests/
+C:\acmeTests> activate
+(robot_env) C:\acmeTests> robot --outputdir results tests/api-test.robot
 ----
+
+The test results can be found in the `results` folder.
+
+== Using RIDE
+
+Start the RIDE editor as follows:
+----
+(robot_env) C:\acmeTests> ride.py
+----
+
+== UI testing using Browser Library
+The https://robotframework-browser.org/[Browser Library] is powered by https://playwright.dev/[Playwright] and more modern than Selenium.
+
+We'll start with a really simple test. Create this file:
+
+.acmeTests/tests/ui-test.robot
+[source]
+----
+include::../../acmeTests/tests/ui-test.robot[]
+----
+
+Run on the command line:
+----
+C:\acmeTests> activate
+(robot_env) C:\acmeTests> robot --outputdir results tests/ui-test.robot
+----
+
+== Conclusion
+You now have your environment up and running. View the extensive reference materials and the many tutorials to master Robot Framework.
 
 
